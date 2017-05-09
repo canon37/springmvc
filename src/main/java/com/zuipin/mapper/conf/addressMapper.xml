@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zuipin.mapper.AddressMapper">  
+  <resultMap type="Address" id="addressMap">
+    <id property="id" column="address_id"/>
+    <result property="city" column="city"/>
+  </resultMap>
+</mapper>

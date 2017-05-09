@@ -1,0 +1,25 @@
+spring:
+  datasource: 
+    name: db
+    type: org.apache.commons.dbcp.BasicDataSource
+    url: jdbc:mysql://localhost:3306/test?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.jdbc.Driver
+    minIdle: 1
+    maxActive: 2
+    maxWait: 60000
+    
+mybatis:   
+  type-aliases-package: com.zuipin.entity
+  mapper-locations: classpath:com/zuipin/mapper/conf/**.xml
+  base-package: com.zuipin.mapper
+  
+logging: 
+  config: classpath:logback-spring.xml
+  path: ../../logs/
+  
+server: 
+  port: 10088
+  
+debug: false

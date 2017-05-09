@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zuipin.mapper.UserMapper">  
+  <!--查找单个  -->
+  <select id="findById" resultType="User">
+    select * from user where id = #{id}
+  </select>  
+  
+  <!--查找全部  -->
+  <select id="findAll" resultType="User">
+  	select * from user
+  </select>
+  
+  <select id="findByName" resultType="User">
+    select * from user where name like concat('%', #{name}, '%') limit #{pagination.offset},#{pagination.pageSize}
+  </select>
+  
+  <!-- 动态sql -->
+  <insert id="insertBatch" parameterType="list">
+    insert into user(name) values
+    <foreach collection="list" item="user" index="index" separator=",">
+        (#{user.name})
+    </foreach>
+  </insert>
+  
+  <!--关联查找  -->
+  <select id="findWithAddress" resultMap="userWithAddressMap">
+  	select 
+  		u.id as user_id,
+  		u.name,
+  		a.city,
+  		a.id as address_id,
+  		o.order_no,
+  		o.id as order_id
+  	from user u 
+  	left join address a on(u.address_id=a.id) 
+  	left join order_record o on(o.user_id=u.id)
+  </select>
+  
+  <!--关联查询配置， extends:userMap复用 -->
+  <resultMap type="User" id="userWithAddressMap" extends="userMap">
+  	<!-- 关联列 addressMap在addressMapper.xml中 ，引用其他文件的resultMap要加命名空间-->
+  	<association property="address" column="address_id" resultMap="com.zuipin.mapper.AddressMapper.addressMap" />
+  	<collection property="orderList" column="order_id" javaType="ArrayList" ofType="Order" resultMap="com.zuipin.mapper.OrderMapper.orderMap"/>
+  </resultMap>
+  
+  <resultMap type="User" id="userMap">
+  	<id column="user_id" property="id"/>
+  	<result column="name" />
+  </resultMap>
+</mapper>
