@@ -36,6 +36,8 @@
         </encoder>
     </appender>
      -->
+     
+    <logger name="com.zuipin.mapper" level="DEBUG"/>
     <root level="INFO">
         <appender-ref ref="STDOUT" />
         <appender-ref ref="INFO" />
