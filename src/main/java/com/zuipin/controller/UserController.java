@@ -6,8 +6,9 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 
+import java.util.List;
+
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import springfox.documentation.annotations.ApiIgnore;
@@ -31,6 +33,7 @@ import com.zuipin.framework.editor.UserEditor;
 import com.zuipin.framework.emuns.ErrorCode;
 import com.zuipin.framework.result.Result;
 import com.zuipin.service.IUserService;
+import com.zuipin.util.Pagination;
 
 @Controller
 @RequestMapping(value = "/user")
@@ -143,9 +146,12 @@ public class UserController {
 	
 	@RequestMapping(value = "/list", method = RequestMethod.POST)
 	@ApiOperation(value = "数据传参", notes = "数据传参")
-	public Result<?> list(@RequestParam User user, @ApiIgnore HttpServletRequest request) {
-		request.getParameterMap();
-		return new Result<>(ErrorCode.SUCCESS);
+	@ResponseBody
+	public Result<?> list(@RequestParam String name, @RequestBody Pagination pagination) {
+		List<User> findByName = userService.findByName(name, pagination);
+		Result<Object> result = new Result<>(ErrorCode.SUCCESS);
+		result.setData(findByName);
+		return result;
 	}
 	
 	//@InitBinder

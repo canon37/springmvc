@@ -14,7 +14,7 @@
   </select>
   
   <select id="findByName" resultType="User">
-    select * from user where name like concat('%', #{name}, '%') limit #{pagination.offset},#{pagination.pageSize}
+    select * from user where name like concat('%', #{name}, '%') 
   </select>
   
   <!-- 动态sql -->

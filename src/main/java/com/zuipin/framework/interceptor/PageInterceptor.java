@@ -40,8 +40,7 @@ import com.zuipin.util.Pagination;
  *
  */
 @Component
-@Intercepts({ @Signature(method = "prepare", type = StatementHandler.class, args = {
-		Connection.class, Integer.class }) })
+@Intercepts({ @Signature(method = "prepare", type = StatementHandler.class, args = { Connection.class, Integer.class }) })
 public class PageInterceptor implements Interceptor {
 	@Value("${spring.datasource.driver-class-name}")
 	private String databaseType;//数据库类型，不同的数据库有不同的分页方法
