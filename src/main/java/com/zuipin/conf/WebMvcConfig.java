@@ -8,10 +8,12 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.HandlerMethodReturnValueHandler;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 import com.zuipin.framework.handler.ResponseBodyHandler;
+import com.zuipin.framework.interceptor.LogPrehandleInterceptor;
 import com.zuipin.framework.listener.InitalListener;
 import com.zuipin.framework.resolver.ArgumentInjectResolver;
 
@@ -31,6 +33,15 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
 	
 	@Resource
 	private ResponseBodyHandler responseBodyHandler;
+	
+	@Resource
+	private LogPrehandleInterceptor logPrehandleInterceptor;
+	
+	@Override
+	public void addInterceptors(InterceptorRegistry registry) {
+		registry.addInterceptor(logPrehandleInterceptor);
+		super.addInterceptors(registry);
+	}
 	
 	/**
 	 * 参数解析

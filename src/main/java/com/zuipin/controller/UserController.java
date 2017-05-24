@@ -76,6 +76,13 @@ public class UserController {
 		return user;
 	}
 	
+	@RequestMapping(value = "/findById", method = RequestMethod.GET)
+	@ApiOperation(value = "查询用户", notes = "查询用户")
+	@ResponseBody
+	public User findById(@RequestParam Long id){
+		return userService.findById(id);
+	}
+	
 	@RequestMapping(value = "/insert", method = RequestMethod.POST)
 	@ApiOperation(value = "插入用户", notes = "插入用户")
 	@Valids({ @Valid(name = "user.id", maxValue = 100), @Valid(name = "user.name", length = 5),
